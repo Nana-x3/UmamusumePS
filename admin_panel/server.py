@@ -123,7 +123,7 @@ class PanelServer(ThreadingHTTPServer):
     daemon_threads = True
 
     def __init__(self, port: int, extra_hosts=()):
-        super().__init__(("127.0.0.1", port), Handler)
+        super().__init__(("0.0.0.0", port), Handler)  #change for use in docker to host 0.0.0.0
         self.port = self.server_address[1]
         self.extra_hosts = frozenset(extra_hosts)
         self.pool = Pool()

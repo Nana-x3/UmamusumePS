@@ -51,7 +51,7 @@ REGIONS = {
     "jp": dict(app="app.jp.server:app", port=8444, admin_port=8190, cert="jp", install="UmamusumePrettyDerby_Jpn",
                data="UmamusumePrettyDerby_Jpn_Data", exe="UmamusumePrettyDerby_Jpn.exe"),
 }
-HOST = "127.0.0.1"
+HOST = "0.0.0.0" #setting Host 0.0.0.0 to work from Docker container
 
 ASSUME_YES = False
 

@@ -37,7 +37,7 @@ class Handler(BaseHTTPRequestHandler):
         pass
 
     def _allowed(self) -> bool:
-        ok = {f"192.168.8.199:{self.server.port}", f"127.0.0.1:{self.server.port}", f"localhost:{self.server.port}", *self.server.extra_hosts}
+        ok = {f"192.168.8.138:{self.server.port}", f"192.168.8.199:{self.server.port}", f"127.0.0.1:{self.server.port}", f"localhost:{self.server.port}", *self.server.extra_hosts}
         if self.headers.get("Host") not in ok:
             return False
         origin = self.headers.get("Origin")

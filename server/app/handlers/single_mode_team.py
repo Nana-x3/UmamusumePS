@@ -7442,6 +7442,14 @@ def _build_race_reward_info(program_id, result_rank: int, gained_fans: int,
                 "item_num": row["item_num"]}
         key = "race_reward" if row["reward_type"] == 1 else "race_reward_bonus"
         info[key].append(item)
+    
+    #Carats for each won race depending on placement
+    _CAREER_CARAT_BY_RANK = {1: 450, 2: 300, 3: 150}
+
+    n = _CAREER_CARAT_BY_RANK.get(int(result_rank))
+    if n:
+        info["race_reward"].append({"item_type": 90, "item_id": 43, "item_num": n})
+
     return info
 
 

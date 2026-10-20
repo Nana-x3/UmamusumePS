@@ -57,3 +57,4 @@ export interface LoadIndexData {
   single_mode_scenario_id_array: number[];
   [key: string]: unknown;
 }
+

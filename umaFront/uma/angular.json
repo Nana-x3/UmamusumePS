@@ -67,9 +67,10 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
-	  "options":{
-		"allowedHosts": ["localhost", "172.17.0.3"]
-	  },
+	        "options":{
+		        "allowedHosts": ["localhost", "172.17.0.3"]
+            "proxyConfig": "proxy.conf.mjs",
+	          },
           "configurations": {
             "production": {
               "buildTarget": "uma:build:production"

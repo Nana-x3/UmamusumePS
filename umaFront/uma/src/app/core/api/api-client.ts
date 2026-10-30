@@ -31,8 +31,8 @@ export class ApiClient {
 
   signup(params: {
     country: string;
-    optinUserBirth: number;
-    dmaState: number;
+    optinUserBirth: 0;
+    dmaState: 0;
   }): Promise<SignupData> {
     return signup(this.client, params);
   }

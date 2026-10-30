@@ -11,7 +11,7 @@ export interface PreSignupData {
 }
 
 export interface SignupData {
-  viewer_id: number | string;
+  viewer_id: string;
   auth_key: string;
 }
 

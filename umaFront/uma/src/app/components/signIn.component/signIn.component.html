@@ -1,0 +1,22 @@
+<h1> This is Uma Sign in Site </h1>
+
+@if (!isSignUp){
+  <input type="text" placeholder="Enter your User id" [ngModel]="sessionStore.viewerid()" (ngModelChange)="sessionStore.viewerid.set($event)"/>
+  <button>Log In</button>
+  <button (click)="isSignUp=true; sessionStore.getCountryList()">Sign Up</button>
+
+  }@else{
+  <select [(ngModel)]="selectedCountry">
+    @for (country of sessionStore.countries();track country.country){
+    <option [value]="country.country">{{country.country}}</option>
+
+
+    }
+  </select>
+
+  @if (selectedCountry !== ''){
+    <button [disabled]="sessionStore.viewerid()!==''" (click)="sessionStore.signUp(selectedCountry)">Sign Up </button>
+    <p>{{sessionStore.viewerid()}}</p>
+  }
+  }
+

@@ -1,37 +1,16 @@
 import { Component, inject, signal } from '@angular/core';
 import { ApiClient } from '../core/api/api-client';
-import type { CountryEntry } from '../core/api/models/phase0.apitypes';
+import { SessionStore } from '../core/state/session.store';
 
-type CheckStatus = 'idle' | 'loading' | 'ok' | 'error';
 
 @Component({
   selector: 'app-protocol-check',
   template: `
-    <h1>Protocol check</h1>
+    <h1>Check Site</h1>
 
-    <p class="status">status: <strong>{{ status() }}</strong></p>
+    <button (click)=doStuff()> Does Stuff </button>
 
-    @if (error(); as message) {
-      <p class="error">{{ message }}</p>
-    }
 
-    @if (status() === 'ok') {
-      <p>countries: <strong>{{ countries().length }}</strong></p>
-      <p>result_code: {{ resultCode() }}</p>
-      <p>sid: {{ sid() }}</p>
-      <p>udid: {{ udid() }}</p>
-
-      <label for="country">country</label>
-      <select id="country" size="8">
-        @for (entry of countries(); track entry.country) {
-          <option [value]="entry.country">{{ entry.country }}</option>
-        }
-      </select>
-    }
-
-    <button type="button" (click)="run()" [disabled]="status() === 'loading'">
-      {{ status() === 'loading' ? 'running...' : 'run again' }}
-    </button>
   `,
   styles: `
     :host {
@@ -45,32 +24,11 @@ type CheckStatus = 'idle' | 'loading' | 'ok' | 'error';
 })
 export class ProtocolCheckComponent {
   private readonly api = inject(ApiClient);
+  private sessionStore = inject(SessionStore)
 
-  readonly status = signal<CheckStatus>('idle');
-  readonly resultCode = signal<number | null>(null);
-  readonly sid = signal<string | null>(null);
-  readonly udid = signal<string | null>(null);
-  readonly countries = signal<CountryEntry[]>([]);
-  readonly error = signal<string | null>(null);
+  doStuff(): void{
+    this.sessionStore.getCountryList()
 
-  constructor() {
-    void this.run();
   }
 
-  async run(): Promise<void> {
-    this.status.set('loading');
-    this.error.set(null);
-
-    try {
-      const data = await this.api.preSignup();
-      this.countries.set(data.country_list);
-      this.resultCode.set(1);
-      this.sid.set(this.api.client.getLastSid());
-      this.udid.set(this.api.client.getUdidHex());
-      this.status.set('ok');
-    } catch (error: unknown) {
-      this.error.set(error instanceof Error ? error.message : String(error));
-      this.status.set('error');
-    }
-  }
 }

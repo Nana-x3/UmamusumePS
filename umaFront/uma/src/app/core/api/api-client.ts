@@ -12,12 +12,14 @@ import { UmaClient } from '../protocol/uma-client';
 import { loadIndex } from './load.api';
 import { readInfoIndex } from './read_info.api';
 import { preSignup, signup, startSession } from './tool.api';
+import { changeName, changeSex } from './user.api';
 import type {
   LoadIndexData,
   PreSignupData,
   ReadInfoData,
   SignupData,
   StartSessionData,
+  UserInfo
 } from './models/phase0.apitypes.ts';
 
 @Injectable({ providedIn: 'root' })
@@ -47,5 +49,13 @@ export class ApiClient {
 
   readInfoIndex(): Promise<ReadInfoData> {
     return readInfoIndex(this.client);
+  }
+
+  changeName(name: string): Promise<UserInfo>{
+    return changeName(this.client, name)
+  }
+
+  changeSex(sex: 1 | 2): Promise<UserInfo>{
+    return changeSex(this.client, sex)
   }
 }

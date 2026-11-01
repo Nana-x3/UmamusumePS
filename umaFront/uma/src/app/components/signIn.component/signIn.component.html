@@ -2,21 +2,32 @@
 
 @if (!isSignUp){
   <input type="text" placeholder="Enter your User id" [ngModel]="sessionStore.viewerid()" (ngModelChange)="sessionStore.viewerid.set($event)"/>
-  <button>Log In</button>
+  <button (click)="sessionStore.startSession()">Log In</button>
   <button (click)="isSignUp=true; sessionStore.getCountryList()">Sign Up</button>
 
-  }@else{
+}@else{
   <select [(ngModel)]="selectedCountry">
     @for (country of sessionStore.countries();track country.country){
     <option [value]="country.country">{{country.country}}</option>
-
-
     }
   </select>
 
   @if (selectedCountry !== ''){
-    <button [disabled]="sessionStore.viewerid()!==''" (click)="sessionStore.signUp(selectedCountry)">Sign Up </button>
+    <button [disabled]="sessionStore.viewerid()!=='' " (click)="sessionStore.signUpAndStart(selectedCountry)">Sign Up </button>
     <p>{{sessionStore.viewerid()}}</p>
   }
+
+  @if (sessionStore.viewerid() !== ''){
+      <input type="text" placeholder="your name" [(ngModel)]="newName" />
+      <button (click)="sessionStore.changeName(newName)">Change Name</button>
+      <button (click)="sessionStore.changeSex(1)" [class.active]="sessionStore.userInfo().sex === 1">Male</button>
+      <button (click)="sessionStore.changeSex(2)" [class.active]="sessionStore.userInfo().sex === 2">Female</button>
+    }
   }
+
+
+
+  @if (sessionStore.isReady()){
+      <button routerLink="/home">Enter Game </button>
+    }
 

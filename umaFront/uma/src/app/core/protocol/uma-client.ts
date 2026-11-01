@@ -126,7 +126,9 @@ export class UmaClient {
   /** Set (and persist) the account id. Called after a successful signup. */
   setViewerId(viewerId: string): void {
     this.viewerId = viewerId;
-    this.storage?.setItem(UMA_VIEWER_ID_KEY, viewerId);
+    this.lastSid = null;
+    if (viewerId) this.storage?.setItem(UMA_VIEWER_ID_KEY, viewerId);
+    else this.storage?.removeItem(UMA_VIEWER_ID_KEY);
   }
 
   /** The device id in hex -- handy for debugging. */
